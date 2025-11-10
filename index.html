@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snack Attack ⚔️ visszaszámlálás</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: url("buenos.png") no-repeat center center/cover;
+      color: white;
+      text-shadow: 0 0 15px rgba(0,0,0,0.7);
+      font-family: "Poppins", sans-serif;
+    }
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: rgba(0,0,0,0.4);
+      padding: 0.5rem 1.5rem;
+      border-radius: 1rem;
+    }
+    .countdown {
+      font-size: 2rem;
+      font-weight: 600;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 1rem 2rem;
+      border-radius: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Snack Attack ⚔️</h1>
+  <div class="countdown" id="countdown">Betöltés...</div>
+
+  <script>
+    // Visszaszámlálás célidőpontja (mai nap 15:03)
+    const now = new Date();
+    const target = new Date();
+    target.setHours(16, 5, 0, 0);
+
+    // Ha már elmúlt, a következő napra állítjuk
+    if (target < now) {
+      target.setDate(target.getDate() + 1);
+    }
+
+    const countdownElement = document.getElementById("countdown");
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = target - now;
+
+      if (diff <= 0) {
+        countdownElement.textContent = "BUENO TIME! 🍫🧁 ";
+        clearInterval(interval);
+        return;
+      }
+
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      countdownElement.textContent = `${hours} óra ${minutes} perc ${seconds} másodperc`;
+    }
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
